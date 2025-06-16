@@ -14,7 +14,7 @@
 
 ## Diagrama de Casos de Uso
 
-![Diagrama de Casos de Uso](diagrama-exemplo.png)
+![Diagrama de Casos de Uso](diagramas/diagrama-exemplo.png)
 
 ## Descrição dos Casos de Uso
 
@@ -36,7 +36,7 @@ Quisque id neque a erat imperdiet dictum et ut mauris.
 
 **Diagrama de sequência XX**
 
-![Diagrama de Sequência](diagrama-exemplo.png)
+![Diagrama de Sequência](diagramas/diagrama-exemplo.png)
 
 #### Fluxo Alternativo A
 
