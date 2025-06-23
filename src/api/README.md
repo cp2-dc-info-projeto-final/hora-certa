@@ -82,5 +82,121 @@ Com o banco de dados configurado é possível trabalhar com SQL normalmente, cri
 Para navegar no banco de dados sugiro o a extensão PostgreSQL oficial da Microsoft, repare que há várias extensões com mesmo nome de outro fabricantes. Qualquer outra extensão de sua preferência pode ser utilizada.
 
 
+## Endpoints da API
+
+Aqui uma breve documentação dos endpoints da API de usuários. Para executar o serviço de backend se certifique que o serviço do postgres está online e execute o comando abaixo. Lembre-se de acessar a porta 3000 para testar.
+
+```bash
+npm start
+```
+
+O `nodemon` permite reiniciar automaticamente o servidor Node.js quando arquivos são alterados, sem precisar encerrar o processo e inicar novamente a cada alteração. Para executar utilizando o `nodemon` utilize o comando abaixo.
+
+```bash
+npm run dev
+```
+
+### GET /users
+Retorna todos os usuários
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "login": "hermenegildo",
+      "email": "hermenegildo@email.com"
+    },
+    {
+      "id": 2,
+      "login": "zoroastra",
+      "email": "zoroastra@email.com"
+    }
+  ]
+}
+```
+
+### GET /users/:id
+Retorna um usuário específico
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "login": "hermenegildo",
+    "email": "hermenegildo@email.com"
+  }
+}
+```
+
+### POST /users
+Cria um novo usuário
+**Body:**
+```json
+{
+  "login": "anaxarmandro",
+  "email": "anaxarmandro@email.com"
+}
+```
+
+**Resposta:**
+```json
+{
+  "success": true,
+  "message": "Usuário criado com sucesso",
+  "data": {
+    "id": 2,
+    "login": "anaxarmandro",
+    "email": "anaxarmandro@email.com"
+  }
+}
+```
+
+### PUT /users/:id
+Atualiza um usuário existente
+**Body:**
+```json
+{
+  "login": "hermenegilda",
+  "email": "hermenegilda@email.com"
+}
+```
+
+### DELETE /users/:id
+Remove um usuário
+```json
+{
+  "success": true,
+  "message": "Usuário deletado com sucesso"
+}
+```
+
+## Exemplo de Uso com curl
+
+O `curl` é um comando do linux que permite realizar requisições REST passando uma URL e dados. Abaixo alguns exemplos de como fazer.
+
+```bash
+# Listar todos os usuários
+curl http://localhost:3000/users
+
+# Buscar usuário por ID
+curl http://localhost:3000/users/1
+
+# Criar novo usuário
+curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '{"login":"anaxarmandro","email":"anaxarmandro@email.com"}'
+
+# Atualizar usuário
+curl -X PUT http://localhost:3000/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{"login":"hermenegilda","email":"hermenegilda@email.com"}'
+
+# Deletar usuário
+curl -X DELETE http://localhost:3000/users/3
+```
+
+
+
 
 

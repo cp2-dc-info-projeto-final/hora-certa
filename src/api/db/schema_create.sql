@@ -5,3 +5,7 @@ CREATE TABLE usuario (
     login text NOT NULL,
     email text NOT NULL
 );
+
+INSERT INTO usuario (login, email) VALUES
+('hermenegildo', 'hermenegildo@email.com'),
+('zoroastra', 'zoroastra@email.com');
