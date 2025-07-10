@@ -1,5 +1,7 @@
 <script lang="ts">
   import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card } from 'flowbite-svelte';
+  import { EditOutline } from 'flowbite-svelte-icons';
+  import { goto } from '$app/navigation';
   import api from '$lib/api';
   import { onMount } from 'svelte';
 
@@ -38,6 +40,7 @@ onMount(async () => {
         <TableHeadCell>ID</TableHeadCell>
         <TableHeadCell>Login</TableHeadCell>
         <TableHeadCell>Email</TableHeadCell>
+        <TableHeadCell></TableHeadCell> <!-- coluna para editar -->
       </TableHead>
       <TableBody>
         {#each users as user}
@@ -45,6 +48,15 @@ onMount(async () => {
             <TableBodyCell>{user.id}</TableBodyCell>
             <TableBodyCell>{user.login}</TableBodyCell>
             <TableBodyCell>{user.email}</TableBodyCell>
+            <TableBodyCell>
+              <button
+                class="p-2 rounded border border-blue-200 hover:border-blue-400 transition bg-transparent"
+                title="Editar"
+                on:click={() => goto(`/users/edit/${user.id}`)}
+              >
+                <EditOutline class="w-5 h-5 text-blue-500" />
+              </button>
+            </TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>
@@ -55,9 +67,18 @@ onMount(async () => {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 max-w-3xl mx-auto">
       {#each users as user}
         <Card class="w-full p-0 overflow-hidden shadow-lg border border-gray-200">
-          <div class="px-4 pt-4 pb-2 bg-gray-100 text-left">
-            <div class="text-lg font-semibold text-gray-800 text-left">{user.login}</div>
-            <div class="text-xs text-gray-400 text-left">ID: {user.id}</div>
+          <div class="px-4 pt-4 pb-2 bg-gray-100 text-left flex items-center justify-between">
+            <div>
+              <div class="text-lg font-semibold text-gray-800 text-left">{user.login}</div>
+              <div class="text-xs text-gray-400 text-left">ID: {user.id}</div>
+            </div>
+            <button
+              class="p-2 rounded border border-blue-200 hover:border-blue-400 transition bg-transparent"
+              title="Editar"
+              on:click={() => goto(`/users/edit/${user.id}`)}
+            >
+              <EditOutline class="w-5 h-5 text-blue-500" />
+            </button>
           </div>
           <div class="px-4 pb-4 pt-2 flex flex-col gap-2 text-left">
             <div class="flex items-center gap-2 text-left">
