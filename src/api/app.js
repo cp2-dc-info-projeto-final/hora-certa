@@ -11,9 +11,9 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-// CORS para liberar requests do frontend nas portas 5173 e 5174
+// CORS para liberar requests do frontend na porta 5173
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true,
 }));
 

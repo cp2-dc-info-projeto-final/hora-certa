@@ -59,7 +59,7 @@
 
 <Card class="max-w-md mx-auto mt-10 p-0 overflow-hidden shadow-lg border border-gray-200 rounded-lg">
   <form class="flex flex-col gap-6 p-6" on:submit|preventDefault={handleSubmit}>
-    <Heading level={2} class="mb-2 text-center">
+    <Heading tag="h3" class="mb-2 text-center">
       {id === null ? 'Cadastrar Usuário' : 'Editar Usuário'}
     </Heading>
     {#if error}

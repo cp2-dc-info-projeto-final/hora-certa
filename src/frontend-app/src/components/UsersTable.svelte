@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card } from 'flowbite-svelte';
-  import { UserEditOutline } from 'flowbite-svelte-icons';
+  import { UserEditOutline, TrashBinOutline } from 'flowbite-svelte-icons';
   import { goto } from '$app/navigation';
   import api from '$lib/api';
   import { onMount } from 'svelte';
@@ -14,6 +14,21 @@
   let users: User[] = [];
   let loading = true;
   let error = '';
+  let deletingId: number | null = null; // id do usuário sendo deletado
+
+  async function handleDelete(id: number) {
+    if (!confirm('Tem certeza que deseja remover este usuário?')) return;
+    deletingId = id;
+    error = '';
+    try {
+      await api.delete(`/users/${id}`);
+      users = users.filter(user => user.id !== id);
+    } catch (e) {
+      error = 'Erro ao remover usuário.';
+    } finally {
+      deletingId = null;
+    }
+  }
 
   onMount(async () => {
     try {
@@ -57,6 +72,14 @@
               >
                 <UserEditOutline class="w-5 h-5 text-primary-500" />
               </button>
+              <button
+                title="Remover"
+                class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
+                on:click={() => handleDelete(user.id)}
+                disabled={deletingId === user.id || loading}
+              >
+                <TrashBinOutline class="w-5 h-5 text-red-400" />
+              </button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
@@ -66,21 +89,31 @@
   <!-- Cards para mobile/tablet -->
   <div class="block lg:hidden">
     
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 max-w-3xl mx-auto">
+<div class="flex flex-col items-center gap-4 my-8 max-w-3xl mx-auto md:grid md:grid-cols-2">
       {#each users as user}
-        <Card class="w-full p-0 overflow-hidden shadow-lg border border-gray-200">
+        <Card class="max-w-sm w-full p-0 overflow-hidden shadow-lg border border-gray-200">
           <div class="px-4 pt-4 pb-2 bg-gray-100 text-left flex items-center justify-between">
             <div>
               <div class="text-lg font-semibold text-gray-800 text-left">{user.login}</div>
               <div class="text-xs text-gray-400 text-left">ID: {user.id}</div>
             </div>
-            <button
-              class="p-2 rounded border border-primary-200 hover:border-primary-400 transition bg-transparent"
-              title="Editar"
-              on:click={() => goto(`/users/edit/${user.id}`)}
-            >
-              <UserEditOutline class="w-5 h-5 text-primary-500" />
-            </button>
+            <div class="flex gap-2">
+              <button
+                class="p-2 rounded border border-primary-200 hover:border-primary-400 transition bg-transparent"
+                title="Editar"
+                on:click={() => goto(`/users/edit/${user.id}`)}
+              >
+                <UserEditOutline class="w-5 h-5 text-primary-500" />
+              </button>
+              <button
+                title="Remover"
+                class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
+                on:click={() => handleDelete(user.id)}
+                disabled={deletingId === user.id || loading}
+              >
+                <TrashBinOutline class="w-5 h-5 text-red-400" />
+              </button>
+            </div>
           </div>
           <div class="px-4 pb-4 pt-2 flex flex-col gap-2 text-left">
             <div class="flex items-center gap-2 text-left">
