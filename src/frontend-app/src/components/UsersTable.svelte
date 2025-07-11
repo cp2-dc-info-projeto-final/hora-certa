@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card } from 'flowbite-svelte';
+import ConfirmModal from './ConfirmModal.svelte';
   import { UserEditOutline, TrashBinOutline } from 'flowbite-svelte-icons';
   import { goto } from '$app/navigation';
   import api from '$lib/api';
@@ -15,9 +16,30 @@
   let loading = true;
   let error = '';
   let deletingId: number | null = null; // id do usuário sendo deletado
+  let confirmOpen = false;
+  let confirmTargetId: number | null = null;
+
+  function openConfirm(id: number) {
+    confirmTargetId = id;
+    confirmOpen = true;
+  }
+  function closeConfirm() {
+    confirmOpen = false;
+    confirmTargetId = null;
+  }
+
+  function handleConfirm() {
+    if (confirmTargetId !== null) {
+      handleDelete(confirmTargetId);
+    }
+    closeConfirm();
+  }
+
+  function handleCancel() {
+    closeConfirm();
+  }
 
   async function handleDelete(id: number) {
-    if (!confirm('Tem certeza que deseja remover este usuário?')) return;
     deletingId = id;
     error = '';
     try {
@@ -75,7 +97,7 @@
               <button
                 title="Remover"
                 class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
-                on:click={() => handleDelete(user.id)}
+                on:click={() => openConfirm(user.id)}
                 disabled={deletingId === user.id || loading}
               >
                 <TrashBinOutline class="w-5 h-5 text-red-400" />
@@ -108,7 +130,7 @@
               <button
                 title="Remover"
                 class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
-                on:click={() => handleDelete(user.id)}
+                on:click={() => openConfirm(user.id)}
                 disabled={deletingId === user.id || loading}
               >
                 <TrashBinOutline class="w-5 h-5 text-red-400" />
@@ -126,3 +148,12 @@
     </div>
   </div>
 {/if}
+
+<ConfirmModal
+  open={confirmOpen}
+  message="Tem certeza que deseja remover este usuário?"
+  confirmText="Remover"
+  cancelText="Cancelar"
+  onConfirm={handleConfirm}
+  onCancel={handleCancel}
+/>
