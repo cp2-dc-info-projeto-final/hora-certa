@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card } from 'flowbite-svelte';
-import ConfirmModal from './ConfirmModal.svelte';
-  import { UserEditOutline, TrashBinOutline } from 'flowbite-svelte-icons';
-  import { goto } from '$app/navigation';
-  import api from '$lib/api';
-  import { onMount } from 'svelte';
+  // Tabela de usuários
+  import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card } from 'flowbite-svelte'; // UI
+  import ConfirmModal from './ConfirmModal.svelte'; // modal de confirmação
+  import { UserEditOutline, TrashBinOutline } from 'flowbite-svelte-icons'; // ícones
+  import { goto } from '$app/navigation'; // navegação
+  import api from '$lib/api'; // API backend
+  import { onMount } from 'svelte'; // ciclo de vida
 
   type User = {
     id: number;
@@ -12,22 +13,25 @@ import ConfirmModal from './ConfirmModal.svelte';
     email: string;
   };
 
-  let users: User[] = [];
+  let users: User[] = []; // lista de usuários
   let loading = true;
   let error = '';
-  let deletingId: number | null = null; // id do usuário sendo deletado
-  let confirmOpen = false;
-  let confirmTargetId: number | null = null;
+  let deletingId: number | null = null; // id em deleção
+  let confirmOpen = false; // modal aberto?
+  let confirmTargetId: number | null = null; // id alvo do modal
 
+  // Abre modal de confirmação
   function openConfirm(id: number) {
     confirmTargetId = id;
     confirmOpen = true;
   }
+  // Fecha modal
   function closeConfirm() {
     confirmOpen = false;
     confirmTargetId = null;
   }
 
+  // Confirma remoção
   function handleConfirm() {
     if (confirmTargetId !== null) {
       handleDelete(confirmTargetId);
@@ -35,6 +39,7 @@ import ConfirmModal from './ConfirmModal.svelte';
     closeConfirm();
   }
 
+  // Cancela remoção
   function handleCancel() {
     closeConfirm();
   }
@@ -72,13 +77,13 @@ import ConfirmModal from './ConfirmModal.svelte';
 {:else}
   <!-- Tabela para telas médias/grandes -->
   <div class="hidden lg:block">
-
-<Table class="w-full max-w-3xl mx-auto my-8 shadow-lg border border-gray-200 rounded-lg">
+    <!-- Tabela de usuários -->
+    <Table class="w-full max-w-3xl mx-auto my-8 shadow-lg border border-gray-200 rounded-lg">
       <TableHead>
         <TableHeadCell>ID</TableHeadCell>
         <TableHeadCell>Login</TableHeadCell>
         <TableHeadCell>Email</TableHeadCell>
-        <TableHeadCell></TableHeadCell> <!-- coluna para editar -->
+        <TableHeadCell></TableHeadCell> <!-- coluna para editar/remover -->
       </TableHead>
       <TableBody>
         {#each users as user}
@@ -87,6 +92,7 @@ import ConfirmModal from './ConfirmModal.svelte';
             <TableBodyCell>{user.login}</TableBodyCell>
             <TableBodyCell>{user.email}</TableBodyCell>
             <TableBodyCell>
+              <!-- Botão editar -->
               <button
                 class="p-2 rounded border border-primary-200 hover:border-primary-400 transition bg-transparent"
                 title="Editar"
@@ -94,6 +100,7 @@ import ConfirmModal from './ConfirmModal.svelte';
               >
                 <UserEditOutline class="w-5 h-5 text-primary-500" />
               </button>
+              <!-- Botão remover -->
               <button
                 title="Remover"
                 class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
@@ -108,11 +115,11 @@ import ConfirmModal from './ConfirmModal.svelte';
       </TableBody>
     </Table>
   </div>
-  <!-- Cards para mobile/tablet -->
+  <!-- Cards para telas pequenas -->
   <div class="block lg:hidden">
-    
-<div class="flex flex-col items-center gap-4 my-8 max-w-3xl mx-auto md:grid md:grid-cols-2">
+    <div class="flex flex-col items-center gap-4 my-8 max-w-3xl mx-auto md:grid md:grid-cols-2">
       {#each users as user}
+        <!-- Card de usuário -->
         <Card class="max-w-sm w-full p-0 overflow-hidden shadow-lg border border-gray-200">
           <div class="px-4 pt-4 pb-2 bg-gray-100 text-left flex items-center justify-between">
             <div>
@@ -120,6 +127,7 @@ import ConfirmModal from './ConfirmModal.svelte';
               <div class="text-xs text-gray-400 text-left">ID: {user.id}</div>
             </div>
             <div class="flex gap-2">
+              <!-- Botão editar -->
               <button
                 class="p-2 rounded border border-primary-200 hover:border-primary-400 transition bg-transparent"
                 title="Editar"
@@ -127,6 +135,7 @@ import ConfirmModal from './ConfirmModal.svelte';
               >
                 <UserEditOutline class="w-5 h-5 text-primary-500" />
               </button>
+              <!-- Botão remover -->
               <button
                 title="Remover"
                 class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
@@ -139,6 +148,7 @@ import ConfirmModal from './ConfirmModal.svelte';
           </div>
           <div class="px-4 pb-4 pt-2 flex flex-col gap-2 text-left">
             <div class="flex items-center gap-2 text-left">
+              <!-- Ícone de email -->
               <svg class="w-4 h-4 text-primary-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 12A4 4 0 1 0 8 12a4 4 0 0 0 8 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14v7m-7-7v7m14-7v7"/></svg>
               <span class="text-gray-700 text-sm">{user.email}</span>
             </div>
@@ -149,6 +159,7 @@ import ConfirmModal from './ConfirmModal.svelte';
   </div>
 {/if}
 
+<!-- Modal de confirmação -->
 <ConfirmModal
   open={confirmOpen}
   message="Tem certeza que deseja remover este usuário?"
