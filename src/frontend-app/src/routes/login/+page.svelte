@@ -1,8 +1,7 @@
 <script lang="ts">
   import { Card, Button, Input, Label, Alert } from "flowbite-svelte";
   import { goto } from "$app/navigation";
-  import { login as authLogin, getCurrentUser } from "$lib/auth";
-  import { setUser } from "$lib/stores/auth";
+  import { login as authLogin } from "$lib/auth";
   
   let login = '';
   let password = '';
@@ -22,9 +21,6 @@
       const result = await authLogin({ login, password });
       
       if (result.success) {
-        // Atualizar o store com os dados do usuário
-        const user = await getCurrentUser();
-        setUser(user);
         goto('/');
       } else {
         error = result.message || 'Credenciais inválidas';

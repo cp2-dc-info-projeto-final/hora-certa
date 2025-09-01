@@ -1,18 +1,38 @@
 <script lang="ts">
-  import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Heading, Button, Dropdown, DropdownItem } from "flowbite-svelte";
+  import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Heading} from "flowbite-svelte";
   import { onMount } from "svelte";
-  import { logout, type User } from "$lib/auth";
+  import { logout, getCurrentUser, getToken, type User } from "$lib/auth";
   import { goto } from "$app/navigation";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
-  import { userStore, isLoadingStore, initializeAuth, clearUser } from "$lib/stores/auth";
+  import { page } from "$app/stores";
   
-  // Usar stores reativos em vez de variáveis locais
-  $: user = $userStore;
-  $: loading = $isLoadingStore;
+  let user: User | null = null;
+  let hasToken = false;
 
-  onMount(async () => {
-    // Inicializar o store de autenticação
-    await initializeAuth();
+  // Verifica token sincronamente (instantâneo)
+  function updateAuthStatus() {
+    hasToken = getToken() !== null;
+    
+    // Se tem token, carrega dados do usuário em background
+    if (hasToken && !user) {
+      getCurrentUser().then(userData => {
+        user = userData;
+      }).catch(() => {
+        user = null;
+        hasToken = false;
+      });
+    } else if (!hasToken) {
+      user = null;
+    }
+  }
+
+  // Reativo à mudança de página
+  $: if ($page.url) {
+    updateAuthStatus();
+  }
+
+  onMount(() => {
+    updateAuthStatus();
   });
 
   // função para logout (só apaga o token)
@@ -20,7 +40,7 @@
     console.log('Logout iniciado...');
     try {
       await logout();
-      clearUser(); // Usar função do store para limpar estado
+      user = null; // Limpar estado local
       console.log('Logout concluído, redirecionando...');
       goto('/login');
     } catch (error) {
@@ -40,7 +60,7 @@
       <NavLi href="/" class="text-lg font-bold px-4 py-2 text-primary-500 dark:text-primary-400 hover:text-yellow-300 hover:bg-gray-700 focus:text-yellow-400 focus:bg-gray-700 transition-colors rounded-lg">Home</NavLi>
       <NavLi href="/about" class="text-lg font-bold px-4 py-2 text-primary-500 dark:text-primary-400 hover:text-yellow-300 hover:bg-gray-700 focus:text-yellow-400 focus:bg-gray-700 transition-colors rounded-lg">Sobre</NavLi>
       
-      {#if !loading}
+      {#if hasToken}
         {#if user} <!-- se existir usuário é porque conseguiu logar-->
           {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
             <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-primary-500 dark:text-primary-400 hover:text-yellow-300 hover:bg-gray-700 focus:text-yellow-400 focus:bg-gray-700 transition-colors rounded-lg">Usuários</NavLi>
@@ -57,9 +77,10 @@
               </button>
             </div>
           </NavLi>
-        {:else} <!-- se não exibe botão de login-->
-          <NavLi href="/login" class="text-lg font-bold px-4 py-2 text-primary-500 dark:text-primary-400 hover:text-yellow-300 hover:bg-gray-700 focus:text-yellow-400 focus:bg-gray-700 transition-colors rounded-lg">Login</NavLi>
         {/if}
+      {:else}
+        <!-- se não tem token, exibe botão de login-->
+        <NavLi href="/login" class="text-lg font-bold px-4 py-2 text-primary-500 dark:text-primary-400 hover:text-yellow-300 hover:bg-gray-700 focus:text-yellow-400 focus:bg-gray-700 transition-colors rounded-lg">Login</NavLi>
       {/if}
     </NavUl>
   </Navbar>
