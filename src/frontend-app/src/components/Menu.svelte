@@ -1,21 +1,18 @@
 <script lang="ts">
   import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Heading, Button, Dropdown, DropdownItem } from "flowbite-svelte";
   import { onMount } from "svelte";
-  import { getCurrentUser, logout, type User } from "$lib/auth";
+  import { logout, type User } from "$lib/auth";
   import { goto } from "$app/navigation";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
+  import { userStore, isLoadingStore, initializeAuth, clearUser } from "$lib/stores/auth";
   
-  let user: User | null = null;
-  let loading = true;
+  // Usar stores reativos em vez de variáveis locais
+  $: user = $userStore;
+  $: loading = $isLoadingStore;
 
   onMount(async () => {
-    // obtém o usuário atual do sessionStorage
-    try {
-      user = await getCurrentUser();
-    } catch (error) {
-      user = null;
-    }
-    loading = false;
+    // Inicializar o store de autenticação
+    await initializeAuth();
   });
 
   // função para logout (só apaga o token)
@@ -23,7 +20,7 @@
     console.log('Logout iniciado...');
     try {
       await logout();
-      user = null;
+      clearUser(); // Usar função do store para limpar estado
       console.log('Logout concluído, redirecionando...');
       goto('/login');
     } catch (error) {

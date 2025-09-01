@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
   import { Card, Button, Input, Label, Alert } from "flowbite-svelte";
   import { goto } from "$app/navigation";
-  import { login as authLogin } from "$lib/auth";
+  import { login as authLogin, getCurrentUser } from "$lib/auth";
+  import { setUser } from "$lib/stores/auth";
   
   let login = '';
   let password = '';
@@ -21,6 +22,9 @@
       const result = await authLogin({ login, password });
       
       if (result.success) {
+        // Atualizar o store com os dados do usuário
+        const user = await getCurrentUser();
+        setUser(user);
         goto('/');
       } else {
         error = result.message || 'Credenciais inválidas';
@@ -33,11 +37,7 @@
     }
   }
 
-  function handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      handleLogin();
-    }
-  }
+
 </script>
 
 <svelte:head>
@@ -51,44 +51,42 @@
     </h2>
     
     <Card class="p-6 w-full">
-      <form class="space-y-6" on:submit|preventDefault={handleLogin}>
-        <div>
-          <Label for="login" class="mb-2">Login</Label>
-          <Input
-            id="login"
-            type="text"
-            bind:value={login}
-            placeholder="Digite seu login"
-            required
-            on:keypress={handleKeyPress}
-          />
-        </div>
+      <form on:submit|preventDefault={handleLogin} class="space-y-6">
+          <div>
+            <Label for="login" class="mb-2">Login</Label>
+            <Input
+              id="login"
+              type="text"
+              bind:value={login}
+              placeholder="Digite seu login"
+              required
+            />
+          </div>
 
-        <div>
-          <Label for="password" class="mb-2">Senha</Label>
-          <Input
-            id="password"
-            type="password"
-            bind:value={password}
-            placeholder="Digite sua senha"
-            required
-            on:keypress={handleKeyPress}
-          />
-        </div>
+          <div>
+            <Label for="password" class="mb-2">Senha</Label>
+            <Input
+              id="password"
+              type="password"
+              bind:value={password}
+              placeholder="Digite sua senha"
+              required
+            />
+          </div>
 
-        {#if error}
-          <Alert color="red" class="mb-4">
-            {error}
-          </Alert>
-        {/if}
+          {#if error}
+            <Alert color="red" class="mb-4">
+              {error}
+            </Alert>
+          {/if}
 
-        <Button
-          type="submit"
-          class="w-full"
-          disabled={loading}
-        >
-          {loading ? 'Entrando...' : 'Entrar'}
-        </Button>
+          <Button 
+            type="submit"
+            class="w-full" 
+            disabled={loading}
+          >
+            {loading ? 'Entrando...' : 'Entrar'}
+          </Button>
       </form>
     </Card>
   </div>
