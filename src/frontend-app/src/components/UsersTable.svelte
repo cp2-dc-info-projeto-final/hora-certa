@@ -1,6 +1,6 @@
 <script lang="ts">
   // Tabela de usuários
-  import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card } from 'flowbite-svelte'; // UI
+  import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card, Badge } from 'flowbite-svelte'; // UI
   import ConfirmModal from './ConfirmModal.svelte'; // modal de confirmação
   import { UserEditOutline, TrashBinOutline } from 'flowbite-svelte-icons'; // ícones
   import { goto } from '$app/navigation'; // navegação
@@ -11,6 +11,7 @@
     id: number;
     login: string;
     email: string;
+    role: string;
   };
 
   let users: User[] = []; // lista de usuários
@@ -50,8 +51,9 @@
     try {
       await api.delete(`/users/${id}`);
       users = users.filter(user => user.id !== id);
-    } catch (e) {
-      error = 'Erro ao remover usuário.';
+    } catch (e: any) {
+      console.error('Erro ao deletar usuário:', e);
+      error = e.response?.data?.message || 'Erro ao remover usuário.';
     } finally {
       deletingId = null;
     }
@@ -62,8 +64,9 @@
       const res = await api.get('/users');
       users = res.data.data;
       console.log(users);
-    } catch (e) {
-      error = 'Erro ao carregar usuários';
+    } catch (e: any) {
+      console.error('Erro ao carregar usuários:', e);
+      error = e.response?.data?.message || 'Erro ao carregar usuários';
     } finally {
       loading = false;
     }
@@ -76,21 +79,27 @@
   <div class="my-8 text-center text-red-500">{error}</div>
 {:else}
   <!-- Tabela para telas médias/grandes -->
-  <div class="hidden lg:block">
+  <div class="hidden xl:block">
     <!-- Tabela de usuários -->
-    <Table class="w-full max-w-3xl mx-auto my-8 shadow-lg border border-gray-200 rounded-lg">
+    <Table class="w-full max-w-5xl mx-auto my-8 shadow-lg border border-gray-200 rounded-lg">
       <TableHead>
-        <TableHeadCell>ID</TableHeadCell>
-        <TableHeadCell>Login</TableHeadCell>
-        <TableHeadCell>Email</TableHeadCell>
-        <TableHeadCell></TableHeadCell> <!-- coluna para editar/remover -->
+        <TableHeadCell class="w-16">ID</TableHeadCell>
+        <TableHeadCell class="w-32">Login</TableHeadCell>
+        <TableHeadCell class="min-w-0">Email</TableHeadCell>
+        <TableHeadCell class="w-20">Role</TableHeadCell>
+        <TableHeadCell class="w-24"></TableHeadCell> <!-- coluna para editar/remover -->
       </TableHead>
       <TableBody>
         {#each users as user}
           <TableBodyRow>
             <TableBodyCell>{user.id}</TableBodyCell>
             <TableBodyCell>{user.login}</TableBodyCell>
-            <TableBodyCell>{user.email}</TableBodyCell>
+            <TableBodyCell class="truncate max-w-0">{user.email}</TableBodyCell>
+            <TableBodyCell>
+              <Badge color={user.role === 'admin' ? 'red' : 'blue'} class="text-xs">
+                {user.role}
+              </Badge>
+            </TableBodyCell>
             <TableBodyCell>
               <!-- Botão editar -->
               <button
@@ -116,7 +125,7 @@
     </Table>
   </div>
   <!-- Cards para telas pequenas -->
-  <div class="block lg:hidden">
+  <div class="block xl:hidden">
     <div class="flex flex-col items-center gap-4 my-8 max-w-3xl mx-auto md:grid md:grid-cols-2">
       {#each users as user}
         <!-- Card de usuário -->
@@ -125,6 +134,9 @@
             <div>
               <div class="text-lg font-semibold text-gray-800 text-left">{user.login}</div>
               <div class="text-xs text-gray-400 text-left">ID: {user.id}</div>
+              <Badge color={user.role === 'admin' ? 'red' : 'blue'} class="text-xs mt-1">
+                {user.role}
+              </Badge>
             </div>
             <div class="flex gap-2">
               <!-- Botão editar -->

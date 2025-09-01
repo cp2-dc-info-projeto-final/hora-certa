@@ -9,7 +9,7 @@ const { verifyToken, isAdmin } = require('../middlewares/auth');
 // requer usuário autenticado como admin
 router.get('/', verifyToken, isAdmin, async function(req, res) {
   try {
-    const result = await pool.query('SELECT id, login, email FROM usuario ORDER BY id');
+    const result = await pool.query('SELECT id, login, email, role FROM usuario ORDER BY id');
     res.json({
       success: true,
       data: result.rows
