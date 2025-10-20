@@ -2,20 +2,28 @@
 
 ## Requisitos Funcionais
 
-### RF 01
+### RF 01 – Permitir cadastro de clientes e prestadores.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nulla vel diam vehicula, eu porttitor nulla aliquam.
+### RF 02 – Permitir login de clientes e prestadores.
 
-### RF 02
+### RF 03 – Permitir busca de prestadores/serviços.
 
-Nullam laoreet, mauris ac tempor vulputate, orci metus aliquet augue, at accumsan odio mi eu sapien. Aliquam tincidunt metus ut aliquet vehicula. Aliquam vitae arcu sed lacus fermentum sagittis.
+### RF 04 – Permitir agendamento de horários com prestadores.
+
+### RF 05 – Permitir confirmação, recusa ou sugestão de novo horário por parte do prestador.
+
+### RF 06 – Permitir cancelamento de agendamento por cliente ou prestador.
+
+### RF 07 – Enviar notificações sobre agendamentos, confirmações e cancelamentos.
 
 ## Requisitos Não-Funcionais
 
-### RNF 01
+### RNF 01 – O sistema deve ser executado apenas em ambiente desktop.
 
-Nulla facilisi. Etiam tempus dolor et odio tincidunt fermentum. Donec pharetra nulla eu euismod maximus. Maecenas eu mauris tincidunt, pulvinar tellus sed, blandit eros.
+### RNF 02 – O sistema deve ter autenticação segura.
 
-### RNF 02
+### RNF 03 – O sistema deve ter disponibilidade mínima de 99% mensal.
 
-Nam id enim ut quam faucibus scelerisque at non diam. Morbi eget eleifend lectus, quis fringilla elit. Morbi iaculis, elit vel accumsan hendrerit, ipsum purus varius lacus, eget facilisis massa mauris ac ipsum.
+### RNF 04 – O sistema deve ter interface simples e intuitiva para facilitar o uso.
+
+### RNF 05 – O sistema deve suportar múltiplos acessos simultâneos sem perda de desempenho.
