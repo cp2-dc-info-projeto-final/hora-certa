@@ -1,35 +1,38 @@
-# Nome do Meu Projeto
+# Hora Certa – Sistema de Agendamento de Serviços e Notificações
 
-Projeto Final 2025 do Curso Técnico Integrado de Desenvolvimento de Sistemas - Colégio Pedro II - Campus Duque de Caxias
+**Projeto Final 2025 do Curso Técnico Integrado de Desenvolvimento de Sistemas - Colégio Pedro II - Campus Duque de Caxias**
 
-**Integrantes:**
- - Erick Mikael Alhadas Santos (@mikaodayaka)
+## Integrantes
+- Erick Mikael Alhadas Santos (@mikaodayaka)
 
- ## Tecnologias
+## Tecnologias
+Este projeto é desenvolvido utilizando Node.js com Express para o backend, SvelteKit como framework frontend e Tailwind como framework CSS.
 
-Este projeto é desenvolvido utilizando  para desenvolvimento da API de backend, SvelteKit como framework frontend e Tailwind como framework CSS.
+- **Backend (API)**: gerencia cadastro de usuários, login, agendamentos e envio de notificações.
+- **Frontend (Aplicação SvelteKit)**: fornece interface intuitiva para clientes e prestadores interagirem com o sistema.
+- **Comunicação**: todas as requisições entre frontend e backend são realizadas via HTTP utilizando o formato JSON.
 
-Em termos de arquitetura de software, este projeto é composto por duas aplicações:
-- API/Backend desenvolvida em Node.js com Express
-- Aplicação Frontend desenvolvida com Svelte e estilizada com Tailwind
-
-A Aplicação frontend realiza requisições à API utilizando os verbos HTTP, que por sua vez retorna as informações a serem tratadas pela interface. Todo envio e rebimento de informações entre as duas aplicações é realizada utilizando o formato JSON.
-
-Para detalhes técnicos de como executar o projeto consulte o [README da API](src/api/README.md) e [README da Aplicação Frontend](src/frontend-app/README.md). 
+Para detalhes técnicos de como executar o projeto consulte:
+- [README da API](src/api/README.md)  
+- [README da Aplicação Frontend](src/frontend-app/README.md)
 
 ## Descrição do Projeto
+O **Hora Certa** é um sistema voltado para gerenciamento de agendamentos entre clientes e prestadores de serviços. Permite que clientes busquem prestadores disponíveis, agendem horários, recebam confirmações e notificações. Prestadores podem confirmar, recusar ou sugerir novos horários, além de gerenciar seus compromissos. O sistema garante uma interface simples e intuitiva, com autenticação segura e suporte a múltiplos acessos simultâneos.
 
-Nunc aliquet lobortis tristique. In pretium nisi vitae viverra venenatis. Ut iaculis sem quis arcu ornare interdum. In id condimentum arcu, sed ornare sem. Aliquam consequat at dolor eget sagittis. Praesent nec ante eget felis porttitor cursus eget suscipit urna. Sed consequat consectetur tristique.
-
-Sed sit amet ante sem. Nunc id sapien metus. Etiam lobortis in purus ut porta. Vestibulum at libero euismod felis feugiat tempus eu sagittis lorem. Vestibulum ultrices, mi euismod eleifend viverra, odio enim volutpat tortor, sed condimentum odio est id purus. Sed at leo vel ligula luctus bibendum in sed justo. Duis sodales consectetur vestibulum. Morbi libero quam, varius ac sodales eget, bibendum eu quam. In accumsan ac turpis vitae porttitor. Nulla eget velit in nisl vulputate sagittis. Phasellus ligula mi, viverra id vehicula nec, varius eget diam. Vestibulum id ultricies nulla, vel sagittis lorem. Sed aliquam dictum lacus quis maximus.
+Principais funcionalidades:
+- Cadastro de clientes e prestadores (RF01)
+- Login de clientes e prestadores (RF02)
+- Busca de prestadores ou serviços disponíveis (RF03)
+- Agendamento de horários (RF04)
+- Confirmação, recusa ou sugestão de novos horários por prestadores (RF05)
+- Cancelamento de agendamentos (RF06)
+- Notificações sobre agendamentos, confirmações e cancelamentos (RF07)
 
 ## Documentação
+- [Manual do Usuário](manual.md)  
+- [Requisitos](requisitos.md)  
+- [Casos de Uso](casos-de-uso.md)  
+- [Apresentação](apresentacao.pdf)  
 
-- [Manual do Usuário](manual.md)
-- [Requisitos](requisitos.md)
-- [Casos de Uso](casos-de-uso.md)
-- [Apresentação](apresentacao.pdf)
-
-**Modelagem do Banco de Dados**
-
+## Modelagem do Banco de Dados
 ![Diagrama de Banco de Dados](diagramas/diagrama-exemplo.png)
