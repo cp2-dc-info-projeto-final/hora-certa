@@ -2,12 +2,12 @@
 
 ## Lista dos Casos de Uso
 
-- [CDU 01](#cdu-01-cadastrar-se-no-sistema): Cadastrar-se no sistema  
-- [CDU 02](#cdu-02-fazer-login-no-sistema): Fazer login no sistema  
-- [CDU 03](#cdu-03-buscar-prestador-serviço): Buscar prestador/serviço  
-- [CDU 04](#cdu-04-agendar-horário): Agendar horário  
-- [CDU 05](#cdu-05-confirmar-recusar-agendamento): Confirmar/Recusar agendamento  
-- [CDU 06](#cdu-06-cancelar-agendamento): Cancelar agendamento  
+- [CDU 01](#cdu-01-cadastrar-se-no-sistema): Cadastrar-se no sistema
+- [CDU 02](#cdu-02-fazer-login-no-sistema): Fazer login no sistema
+- [CDU 03](#cdu-03-buscar-prestador-servico): Buscar prestador/serviço
+- [CDU 04](#cdu-04-agendar-horario): Agendar horário
+- [CDU 05](#cdu-05-confirmar-recusar-agendamento): Confirmar/Recusar agendamento
+- [CDU 06](#cdu-06-cancelar-agendamento): Cancelar agendamento
 
 ## Lista dos Atores
 
@@ -17,7 +17,7 @@
 
 ## Diagrama de Casos de Uso
 
-![Diagrama de Casos de Uso](image.png)  
+![Diagrama de Casos de Uso](diagramas/image.png)
 
 ## Descrição dos Casos de Uso
 
@@ -51,7 +51,6 @@
 
 1. Cliente  
 2. Prestador  
-3. Administrador  
 
 #### Fluxo Principal
 
