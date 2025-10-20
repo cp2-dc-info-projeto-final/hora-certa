@@ -30,16 +30,14 @@
 1. Cliente  
 2. Prestador  
 
-#### Fluxo Principal
-
+#### ○ Fluxos Principais dos Casos de Uso
 1. Usuário acessa a tela de cadastro.  
-2. Informa dados obrigatórios (nome, e-mail, senha e tipo de perfil).  
-3. Sistema valida as informações.  
-4. Sistema confirma cadastro e disponibiliza acesso.  
+2. Usuário informa dados obrigatórios: nome, e-mail, senha e tipo de perfil.  
+3. Sistema valida as informações inseridas.  
+4. Sistema confirma o cadastro e disponibiliza acesso ao sistema.
 
-#### Fluxo Alternativo A
-
-1. Dados inválidos → Sistema informa erro e solicita correção.  
+#### ○ Fluxos Alternativos de Casos de Uso
+A1. Dados inválidos → Sistema informa erro e solicita correção.  
 
 ---
 
@@ -52,16 +50,15 @@
 1. Cliente  
 2. Prestador  
 
-#### Fluxo Principal
-
+#### ○ Fluxos Principais dos Casos de Uso
 1. Usuário acessa a tela de login.  
-2. Informa e-mail e senha.  
+2. Usuário informa e-mail e senha.  
 3. Sistema valida as credenciais.  
-4. Sistema libera acesso ao painel correspondente.  
+4. Sistema libera acesso ao painel correspondente (cliente ou prestador).
 
-#### Fluxo Alternativo A
-
-1. Senha incorreta → Sistema informa erro e permite nova tentativa.  
+#### ○ Fluxos Alternativos de Casos de Uso
+A1. Senha incorreta → Sistema informa erro e permite nova tentativa.  
+A2. Usuário não cadastrado → Sistema informa que é necessário realizar cadastro.  
 
 ---
 
@@ -73,16 +70,14 @@
 
 1. Cliente  
 
-#### Fluxo Principal
-
+#### ○ Fluxos Principais dos Casos de Uso
 1. Cliente acessa a tela de busca.  
-2. Informa serviço ou nome do prestador.  
+2. Cliente informa serviço ou nome do prestador.  
 3. Sistema apresenta lista de prestadores compatíveis.  
-4. Cliente visualiza disponibilidade.  
+4. Cliente visualiza disponibilidade dos prestadores listados.
 
-#### Fluxo Alternativo A
-
-1. Nenhum prestador encontrado → Sistema exibe mensagem “nenhum resultado”.  
+#### ○ Fluxos Alternativos de Casos de Uso
+A1. Nenhum prestador encontrado → Sistema exibe mensagem "nenhum resultado encontrado".  
 
 ---
 
@@ -95,17 +90,15 @@
 1. Cliente  
 2. Prestador  
 
-#### Fluxo Principal
-
-1. Cliente seleciona prestador e serviço.  
-2. Sistema mostra horários disponíveis.  
+#### ○ Fluxos Principais dos Casos de Uso
+1. Cliente seleciona prestador e serviço desejado.  
+2. Sistema apresenta horários disponíveis do prestador.  
 3. Cliente escolhe horário e confirma agendamento.  
-4. Sistema registra o agendamento como “Pendente”.  
-5. Sistema envia notificação ao prestador.  
+4. Sistema registra o agendamento como "Pendente".  
+5. Sistema envia notificação ao prestador sobre o novo agendamento.
 
-#### Fluxo Alternativo A
-
-1. Horário indisponível → Sistema sugere novos horários.  
+#### ○ Fluxos Alternativos de Casos de Uso
+A1. Horário indisponível → Sistema sugere novos horários disponíveis.  
 
 ---
 
@@ -117,16 +110,14 @@
 
 1. Prestador  
 
-#### Fluxo Principal
-
+#### ○ Fluxos Principais dos Casos de Uso
 1. Prestador acessa a lista de agendamentos pendentes.  
-2. Seleciona o agendamento.  
-3. Prestador confirma ou recusa.  
-4. Sistema atualiza status e notifica cliente.  
+2. Prestador seleciona o agendamento desejado.  
+3. Prestador confirma ou recusa o agendamento.  
+4. Sistema atualiza o status do agendamento e notifica o cliente.
 
-#### Fluxo Alternativo A
-
-1. Prestador sugere novo horário → Cliente pode aceitar ou recusar.  
+#### ○ Fluxos Alternativos de Casos de Uso
+A1. Prestador sugere novo horário → Cliente pode aceitar ou recusar a sugestão.  
 
 ---
 
@@ -139,13 +130,11 @@
 1. Cliente  
 2. Prestador  
 
-#### Fluxo Principal
+#### ○ Fluxos Principais dos Casos de Uso
+1. Usuário (cliente ou prestador) acessa o agendamento.  
+2. Usuário solicita cancelamento.  
+3. Sistema remove reserva e libera o horário para outros clientes.  
+4. Sistema notifica o outro usuário sobre o cancelamento.
 
-1. Usuário acessa o agendamento.  
-2. Solicita cancelamento.  
-3. Sistema remove reserva e libera o horário.  
-4. Sistema notifica o outro usuário.  
-
-#### Fluxo Alternativo A
-
-1. Cancelamento fora do prazo permitido → Sistema informa regras (ex.: multa).  
+#### ○ Fluxos Alternativos de Casos de Uso
+A1. Cancelamento fora do prazo permitido → Sistema informa regras (ex.: multa).  
