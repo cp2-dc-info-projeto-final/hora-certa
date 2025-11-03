@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "flowbite": "^3.1.2",
+    "flowbite-svelte": "^1.18.0"
+  }
+}
